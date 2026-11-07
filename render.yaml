@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: atiq-image-host
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: WEBHOOK_SECRET
+        generateValue: true
+      - key: WEBHOOK_PATH
+        generateValue: true
+      - key: S3_BUCKET
+        sync: false
+      - key: AWS_REGION
+        value: ap-south-1
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: URL_EXPIRY_SECONDS
+        value: "604800"
+      - key: MAX_FILE_MB
+        value: "20"
+      - key: LOG_LEVEL
+        value: INFO
